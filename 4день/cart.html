@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Анкета — БабаКлава</title>
+    <title>Корзина — БабаКлава</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -21,204 +21,28 @@
     </header>
 
     <main>
-  
         <section class="section">
-            <h2>Регистрация внука</h2>
-
-            <form id="registration" class="form" action="#" method="post" novalidate>
-                <fieldset>
-                    <legend>Личные данные</legend>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="lastname">Фамилия *</label>
-                            <input type="text" id="lastname" name="lastname" required minlength="2" maxlength="30" placeholder="Иванов">
-                            <span class="error-msg"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="firstname">Имя *</label>
-                            <input type="text" id="firstname" name="firstname" required minlength="2" maxlength="30" placeholder="Иван">
-                            <span class="error-msg"></span>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="birthdate">Дата рождения *</label>
-                            <input type="date" id="birthdate" name="birthdate" required>
-                            <span class="error-msg"></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Обращение</label>
-                            <div class="radio-group">
-                                <label><input type="radio" name="gender" value="внучек"> Внучек</label>
-                                <label><input type="radio" name="gender" value="внучка"> Внучка</label>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <legend>Контактная информация</legend>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" required placeholder="example@mail.ru">
-                            <span class="error-msg"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Телефон *</label>
-                            <input type="tel" id="phone" name="phone" required pattern="\+?[0-9]{10,12}" placeholder="+79001234567">
-                            <span class="error-msg"></span>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="country">Страна *</label>
-                            <select id="country" name="country" required>
-                                <option value="">Выберите страну</option>
-                                <option value="ru">Россия</option>
-                                <option value="by">Беларусь</option>
-                                <option value="kz">Казахстан</option>
-                                <option value="other">Другая</option>
-                            </select>
-                            <span class="error-msg"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="city">Город *</label>
-                            <input type="text" id="city" name="city" required minlength="2" placeholder="Москва">
-                            <span class="error-msg"></span>
-                        </div>
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <legend>Данные учётной записи</legend>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="password">Пароль *</label>
-                            <input type="password" id="password" name="password" required minlength="8" placeholder="Минимум 8 символов">
-                            <span class="error-msg"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="password2">Повтор пароля *</label>
-                            <input type="password" id="password2" name="password2" required minlength="8">
-                            <span class="error-msg"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="agree" name="agree" required>
-                            Согласен с правилами сайта *
-                        </label>
-                        <span class="error-msg"></span>
-                    </div>
-                </fieldset>
-
-                <button type="submit" class="donate-btn">Зарегистрироваться</button>
-            </form>
-
-            <div id="success-block" class="success-block" style="display: none;">
-                <h2>Регистрация успешна!</h2>
-                <p>Добро пожаловать, <strong id="success-name"></strong>!</p>
-                <p>Email: <span id="success-email"></span></p>
-                <a href="index.html" class="nav-btn shop">На главную</a>
+            <h2>Твоя корзина</h2>
+            <div id="cart-items"></div>
+            <div id="cart-empty" class="cart-empty" style="display: none;">
+                <p>Корзина пустая...</p>
+                <p class="highlight">БабаКлава говорит: «А ты пельмени-то хотел?»</p>
+                <br>
+                <a href="index.html" class="nav-btn shop">Вернуться в магазин</a>
             </div>
-        </section>
-
-
-        <section class="section">
-            <h2>Анкета настоящего внука</h2>
-
-            <form id="anketa" class="form" action="#" method="post">
-                <div class="form-group">
-                    <label for="fav-food">Любимая еда БабаКлавы</label>
-                    <input type="text" id="fav-food" name="fav-food" placeholder="Пельмени, конечно">
-                </div>
-
-                <div class="form-group">
-                    <label for="visits">Сколько раз в месяц навещаешь бабушку?</label>
-                    <input type="number" id="visits" name="visits" min="0" max="31" value="1">
-                </div>
-
-                <div class="form-group">
-                    <label>Что обычно приносишь?</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="gifts" value="flowers"> Цветы</label>
-                        <label><input type="checkbox" name="gifts" value="sweets"> Сладости</label>
-                        <label><input type="checkbox" name="gifts" value="nothing"> Ничего (стыдно)</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Как часто надеваешь шапку по просьбе бабушки?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="hat" value="always"> Всегда</label>
-                        <label><input type="radio" name="hat" value="sometimes"> Иногда</label>
-                        <label><input type="radio" name="hat" value="never"> Никогда</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="character">Любимый персонаж бабушки</label>
-                    <select id="character" name="character">
-                        <option value="">Выбери</option>
-                        <option value="masha">Маша</option>
-                        <option value="bear">Медведь</option>
-                        <option value="shlepa">Шлёпа</option>
-                        <option value="baba">Сама БабаКлава</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="borsh">Как часто ешь бабушкин борщ?</label>
-                    <select id="borsh" name="borsh">
-                        <option value="">Выбери</option>
-                        <option value="every-day">Каждый день</option>
-                        <option value="week">Раз в неделю</option>
-                        <option value="month">Раз в месяц</option>
-                        <option value="never">Никогда (стыдно)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Что бабушка тебе чаще всего говорит?</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="phrases" value="hat"> «Надень шапку!»</label>
-                        <label><input type="checkbox" name="phrases" value="eat"> «А ты уже поел?»</label>
-                        <label><input type="checkbox" name="phrases" value="marry"> «Тебе бы уже жениться»</label>
-                        <label><input type="checkbox" name="phrases" value="phone"> «Хватит в телефон смотреть»</label>
-                        <label><input type="checkbox" name="phrases" value="disappointed"> «Я просто разочарована...»</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="rating">Оцени строгость БабаКлавы (от 1 до 10)</label>
-                    <input type="number" id="rating" name="rating" min="1" max="10" value="10">
-                </div>
-
-                <div class="form-group">
-                    <label>Ты боишься БабаКлаву?</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="fear" value="yes"> Да</label>
-                        <label><input type="radio" name="fear" value="no"> Нет</label>
-                        <label><input type="radio" name="fear" value="respect"> Уважаю и немного боюсь</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="promise">Обещание бабушке</label>
-                    <textarea id="promise" name="promise" rows="3" placeholder="Я обещаю чаще звонить и носить шапку..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="comment">Комментарий для БабаКлавы</label>
-                    <textarea id="comment" name="comment" rows="4" placeholder="Напиши что-нибудь хорошее..."></textarea>
-                </div>
-
-                <button type="submit" class="donate-btn">Отправить анкету</button>
-            </form>
+            <div id="cart-summary" style="display: none; margin-top: 40px; text-align: center;">
+                <h3>Итого: <span id="cart-total">0</span> ₽</h3>
+                <button class="donate-btn" id="checkout-btn" style="margin-top: 20px;">Оформить заказ</button>
+                <br><br>
+                <button class="clear-cart-btn" id="clear-cart">Очистить корзину</button>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>© 2025 БабаКлава. Все права защищены (и борщ тоже)</p>
+        <p>© 2025 БабаКлава</p>
     </footer>
+
+    <script src="./java.js"></script>
+</body>
+</html>

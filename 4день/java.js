@@ -76,7 +76,7 @@ function renderCart() {
         div.className = "cart-item";
         div.innerHTML = `
             <div class="cart-item-info">
-                <img src="${item.img}" class="cart-item-img" alt="">
+                <img src="${item.img || ''}" class="cart-item-img" alt="">
                 <div>
                     <h3>${item.name}</h3>
                     <p>${item.price} ₽ × ${item.quantity}</p>
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateCartCount();
     renderCart();
 
-
+    // Кнопки Купить
     document.querySelectorAll(".product button").forEach(btn => {
         btn.addEventListener("click", function () {
             const productEl = this.closest(".product");
@@ -149,27 +149,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     document.querySelectorAll(".donate-btn").forEach(btn => {
-        btn.addEventListener("click", function () {
-            const text = this.textContent.trim();
+    if (btn.closest("form") && btn.type === "submit") return;
 
-            if (text.includes("1₽")) {
-                showToast("БабаКлава говорит: Жмот ты внучек 💔 (Кинуть 1₽)");
-            } else {
-                showToast("БабаКлава говорит: Спасибо, внучек ❤️ (" + text + ")");
-            }
+    btn.addEventListener("click", function () {
+        const text = this.textContent.trim();
 
-            this.style.transform = "scale(0.92)";
-            setTimeout(() => {
-                this.style.transform = "scale(1)";
-            }, 150);
-        });
+        if (text.includes("1₽")) {
+            showToast("БабаКлава говорит: Жмот ты внучек 💔 (Кинуть 1₽)");
+        } else {
+            showToast("БабаКлава говорит: Спасибо, внучек ❤️ (" + text + ")");
+        }
+
+        this.style.transform = "scale(0.92)";
+        setTimeout(() => {
+            this.style.transform = "scale(1)";
+        }, 150);
     });
+});
 
     const clearBtn = document.getElementById("clear-cart");
     if (clearBtn) {
         clearBtn.addEventListener("click", clearCart);
     }
-
 
     const checkoutBtn = document.getElementById("checkout-btn");
     if (checkoutBtn) {
@@ -181,70 +182,73 @@ document.addEventListener("DOMContentLoaded", function () {
                 showToast("Спасибо за покупку!");
             }, 1600);
         });
+        console.log(localStorage.getItem("babaCart"))
+    }
+
+    const form = document.getElementById("registration");
+    if (form) {
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            let valid = true;
+            form.querySelectorAll(".error-msg").forEach(el => el.textContent = "");
+
+            const lastname = document.getElementById("lastname");
+            const firstname = document.getElementById("firstname");
+            const email = document.getElementById("email");
+            const phone = document.getElementById("phone");
+            const password = document.getElementById("password");
+            const password2 = document.getElementById("password2");
+            const agree = document.getElementById("agree");
+            const country = document.getElementById("country");
+            const city = document.getElementById("city");
+            const birthdate = document.getElementById("birthdate");
+
+            function showError(input, message) {
+                const msg = input.closest(".form-group").querySelector(".error-msg");
+                if (msg) msg.textContent = message;
+                valid = false;
+            }
+
+            if (!lastname.value.trim()) showError(lastname, "Поле обязательно");
+            else if (lastname.value.trim().length < 2) showError(lastname, "Минимум 2 символа");
+
+            if (!firstname.value.trim()) showError(firstname, "Поле обязательно");
+            else if (firstname.value.trim().length < 2) showError(firstname, "Минимум 2 символа");
+
+            if (!email.value.trim()) showError(email, "Поле обязательно");
+            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) showError(email, "Некорректный email");
+
+            if (!phone.value.trim()) showError(phone, "Поле обязательно");
+
+            if (!password.value) showError(password, "Поле обязательно");
+            else if (password.value.length < 8) showError(password, "Минимум 8 символов");
+            else if (!/[A-ZА-Я]/.test(password.value)) showError(password, "Нужна заглавная буква");
+            else if (!/[0-9]/.test(password.value)) showError(password, "Нужна цифра");
+
+            if (password.value !== password2.value) showError(password2, "Пароли не совпадают");
+
+            if (!agree.checked) showError(agree, "Нужно согласие с правилами");
+
+            if (!country.value) showError(country, "Выберите страну");
+            if (!city.value.trim()) showError(city, "Поле обязательно");
+            if (!birthdate.value) showError(birthdate, "Укажите дату");
+
+            if (valid) {
+                form.style.display = "none";
+                document.getElementById("success-block").style.display = "block";
+                document.getElementById("success-name").textContent = firstname.value + " " + lastname.value;
+                document.getElementById("success-email").textContent = email.value;
+            }
+        });
+    }
+
+
+    const anketa = document.getElementById("anketa");
+    if (anketa) {
+        anketa.addEventListener("submit", function (e) {
+            e.preventDefault();
+            alert("Анкета отправлена! БабаКлава гордится тобой ❤️");
+            anketa.reset();
+        });
     }
 });
-  const form = document.getElementById("registration");
-        if (form) {
-            form.addEventListener("submit", function (e) {
-                e.preventDefault();
-                let valid = true;
-                form.querySelectorAll(".error-msg").forEach(el => el.textContent = "");
-
-                const lastname = document.getElementById("lastname");
-                const firstname = document.getElementById("firstname");
-                const email = document.getElementById("email");
-                const phone = document.getElementById("phone");
-                const password = document.getElementById("password");
-                const password2 = document.getElementById("password2");
-                const agree = document.getElementById("agree");
-                const country = document.getElementById("country");
-                const city = document.getElementById("city");
-                const birthdate = document.getElementById("birthdate");
-
-                function showError(input, message) {
-                    const msg = input.closest(".form-group").querySelector(".error-msg");
-                    if (msg) msg.textContent = message;
-                    valid = false;
-                }
-
-                if (!lastname.value.trim()) showError(lastname, "Поле обязательно");
-                else if (lastname.value.trim().length < 2) showError(lastname, "Минимум 2 символа");
-
-                if (!firstname.value.trim()) showError(firstname, "Поле обязательно");
-                else if (firstname.value.trim().length < 2) showError(firstname, "Минимум 2 символа");
-
-                if (!email.value.trim()) showError(email, "Поле обязательно");
-                else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) showError(email, "Некорректный email");
-
-                if (!phone.value.trim()) showError(phone, "Поле обязательно");
-
-                if (!password.value) showError(password, "Поле обязательно");
-                else if (password.value.length < 8) showError(password, "Минимум 8 символов");
-                else if (!/[A-ZА-Я]/.test(password.value)) showError(password, "Нужна заглавная буква");
-                else if (!/[0-9]/.test(password.value)) showError(password, "Нужна цифра");
-
-                if (password.value !== password2.value) showError(password2, "Пароли не совпадают");
-
-                if (!agree.checked) showError(agree, "Нужно согласие с правилами");
-
-                if (!country.value) showError(country, "Выберите страну");
-                if (!city.value.trim()) showError(city, "Поле обязательно");
-                if (!birthdate.value) showError(birthdate, "Укажите дату");
-
-                if (valid) {
-                    form.style.display = "none";
-                    document.getElementById("success-block").style.display = "block";
-                    document.getElementById("success-name").textContent = firstname.value + " " + lastname.value;
-                    document.getElementById("success-email").textContent = email.value;
-                }
-            });
-        }
-
-        const anketa = document.getElementById("anketa");
-        if (anketa) {
-            anketa.addEventListener("submit", function (e) {
-                e.preventDefault();
-                alert("Анкета отправлена! БабаКлава гордится тобой ❤️");
-                anketa.reset();
-            });
-        }
